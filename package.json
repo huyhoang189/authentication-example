@@ -1,0 +1,9 @@
+{
+  "name": "authentication-example",
+  "version": "1.0.0",
+  "description": "example for authentication use public key and private key",
+  "main": "server.js",
+  "repository": "https://github.com/huyhoang189/authentication-example",
+  "author": "cyber86z",
+  "license": "MIT"
+}
