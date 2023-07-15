@@ -1,42 +1,36 @@
 "use strict";
 
-const hashPassword = require("../utils/authentication/hash-password");
+const {
+  hashPassword,
+  getRandomValues,
+  checkPassword,
+} = require("../utils/authentication");
 const {
   BadRequestError,
   ConflictError,
+  NotFoundError,
+  ForbiddenError,
 } = require("../utils/response/error-response");
 const userModel = require("../models/user-model");
-const RoleUser = require("../commom");
+const { ROLE_USER } = require("../commom");
 const { simplifyDatas, simplifyData } = require("../utils/simplify-data");
 
-class UserService {
-  static signUp = async ({ name, email, password }) => {
-    const holderUser = await userModel.findOne({ email: email });
-    if (holderUser) {
-      throw new ConflictError("User is conflic");
-    }
+const getUserByEmail = async (email) => {
+  return await userModel.findOne({ email });
+};
 
-    const passHash = await hashPassword(password);
-    const newUser = await userModel.create({
-      name,
-      email,
-      password: passHash,
-      roles: [RoleUser.WRITER],
-    });
+const getUserAll = async ({ userId }) => {
+  console.log("d", userId);
+  const holderUsers = await userModel.find({});
+  if (!holderUsers) throw new NotFoundError("Cannot found users");
 
-    // throw new BadRequestError("Looxi");
-    return simplifyData({ fields: ["_id", "name", "email"], object: newUser });
-  };
+  return simplifyDatas({
+    fields: ["_id", "name", "email", "roles"],
+    objects: holderUsers,
+  });
+};
 
-  static getAll = async () => {
-    const holderUsers = await userModel.find({});
-    // console.log(holderUsers);
-
-    return simplifyDatas({
-      fields: ["_id", "name", "email", "roles"],
-      objects: holderUsers,
-    });
-  };
-}
-
-module.exports = UserService;
+module.exports = {
+  getUserAll,
+  getUserByEmail,
+};

@@ -7,9 +7,10 @@ const COLLECTION_NAME = "Tokens";
 var schema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
-    refreshtoken: { type: String, require: true },
-    accesstoken: { type: String },
-    refeshtokens: { type: Array, default: [] },
+    refreshToken: { type: String, require: true },
+    publicKey: { type: String, require: true },
+    privateKey: { type: String, require: true },
+    refreshtokens: { type: Array, default: [] },
   },
   {
     collection: COLLECTION_NAME,

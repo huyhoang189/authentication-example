@@ -2,8 +2,8 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
-const pageNotFound = require("./middlewares/error/page-not-found");
-const errorHandler = require("./middlewares/error/error-handler");
+const pageNotFound = require("./middlewares/handler/page-not-found");
+const errorHandler = require("./middlewares/handler/error-handler");
 const swaggerDocs = require("../swagger");
 const config = require("./configs");
 

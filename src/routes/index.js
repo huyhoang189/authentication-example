@@ -1,7 +1,8 @@
 const express = require("express");
-const checkHealth = require("../utils/check-health");
+const checkHealth = require("../middlewares/handler/check-health");
 const authRouter = require("./auth-router");
 const userRouter = require("./user-router");
+const checkAuth = require("../middlewares/authentication/check-auth");
 const router = express.Router();
 
 /**
@@ -17,5 +18,5 @@ const router = express.Router();
 
 router.get("/", checkHealth);
 router.use(authRouter);
-router.use("/users", userRouter);
+router.use("/users", checkAuth, userRouter);
 module.exports = router;
